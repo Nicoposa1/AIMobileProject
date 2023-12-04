@@ -8,11 +8,8 @@ const Stack = createNativeStackNavigator();
 export const HomeStack = () => {
   return (
     <Stack.Navigator
-      // hide the header bar
-      screenOptions={{headerShown: false}}
-    >
+      screenOptions={{headerShown: false}}>
       <Stack.Screen name="HomeStack" component={HomeScreen} />
     </Stack.Navigator>
   );
 };
-
