@@ -1,14 +1,15 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Image, SafeAreaView, Text, TextInput, View} from 'react-native';
 import React from 'react';
 import {API_KEY} from '@env';
 import axios from 'axios';
+import styles from './styles';
 
 export const HomeScreen = () => {
-  const [input, setInput] = React.useState<String>('');
+  const [input, setInput] = React.useState<string>('');
   const [imageData, setImageData] = React.useState<String>('');
   const [loading, setLoading] = React.useState(false);
 
-  const query = async (QueryData: { inputs: String }) => {
+  const query = async (QueryData: {inputs: String}) => {
     try {
       const response = await axios({
         url: 'https://api-inference.huggingface.co/models/SG161222/Realistic_Vision_V1.4',
@@ -49,10 +50,18 @@ export const HomeScreen = () => {
   };
 
   return (
-    <View>
-      <Text>HomeScreen</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.title}>Image Generator</Text>
+      {/* <Image 
+        style={styles.image}
+        source={{uri: imageData}}
+      /> */}
+      <TextInput
+        style={styles.input}
+        placeholder="Enter text"
+        onChangeText={setInput}
+        value={input}
+      />
+    </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({});
