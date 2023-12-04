@@ -1,8 +1,20 @@
-import {Image, SafeAreaView, Text, TextInput, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import {API_KEY} from '@env';
 import axios from 'axios';
 import styles from './styles';
+
+global.Buffer = global.Buffer || require('buffer').Buffer;
 
 export const HomeScreen = () => {
   const [input, setInput] = React.useState<string>('');
@@ -38,7 +50,6 @@ export const HomeScreen = () => {
     try {
       const data = {inputs: input};
       const response = await query(data);
-      console.log(response);
       if (response !== undefined) {
         setImageData(response);
       }
@@ -50,18 +61,38 @@ export const HomeScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Image Generator</Text>
-      {/* <Image 
-        style={styles.image}
-        source={{uri: imageData}}
-      /> */}
-      <TextInput
-        style={styles.input}
-        placeholder="Enter text"
-        onChangeText={setInput}
-        value={input}
-      />
-    </SafeAreaView>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      enabled>
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.title}>Image Generator</Text>
+        <View style={styles.contentContainer}>
+          {loading ? (
+            <View style={styles.image}>
+              <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+          ) : imageData !== '' ? (
+            <Image style={styles.image} source={{uri: `${imageData}`}} />
+          ) : (
+            <View style={styles.image} />
+          )}
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter text"
+              onChangeText={setInput}
+              value={input}
+            />
+            <TouchableOpacity onPress={onSubmit}>
+              <Image
+                style={styles.icon}
+                source={require('../../assets/images/send-message.png')}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
