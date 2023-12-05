@@ -21,6 +21,7 @@ export default StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    color: 'black'
   },
   input: {
     width: '80%',
