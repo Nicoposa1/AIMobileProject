@@ -1,19 +1,18 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {ImageGeneratorScreen} from '../screens/ImageGeneratorSreen';
+import { SentimientScreen } from '../screens/Sentiment';
 
 // Create a stack navigator
 const Stack = createNativeStackNavigator();
 
-export const ImageGeneratorStack = () => {
+export const ChatStack = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen
-        name="ImageGeneratorStack"
-        component={ImageGeneratorScreen}
+        name="SentimientStack"
+        component={SentimientScreen}
       />
     </Stack.Navigator>
   );
 };
 
-export default HomeStack;

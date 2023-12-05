@@ -1,15 +1,35 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {HomeStack} from './HomeStack';
-import {ImageGeneratorScreen} from '../screens/ImageGeneratorSreen';
 import {Image, Text} from 'react-native';
 import styles from '../screens/Home/styles';
 import {Translator} from '../screens/Translator';
+import {ChatStack} from './ChatStack';
 
 const Tab = createBottomTabNavigator();
 
 export const BottomTabs = () => {
   return (
     <Tab.Navigator>
+      <Tab.Screen
+        name="ChatScreen"
+        component={ChatStack}
+        options={{
+          headerShown: false,
+          tabBarLabel: ({focused}) => (
+            <Text style={{color: focused ? 'blue' : 'gray'}}>Chat</Text>
+          ),
+          tabBarIcon: ({focused}) => (
+            <Image
+              source={require('../assets/images/chat.png')}
+              style={{
+                tintColor: focused ? 'blue' : 'gray',
+                height: 20,
+                width: 20,
+              }}
+            />
+          ),
+        }}
+      />
       <Tab.Screen
         name="ImageGeneratorScreen"
         component={HomeStack}

@@ -26,7 +26,6 @@ export const Translator = () => {
     'en-es': 'Helsinki-NLP/opus-mt-en-es',
     'en-de': 'Helsinki-NLP/opus-mt-en-de',
     'en-fr': 'Helsinki-NLP/opus-mt-en-fr',
-    // Add more models as needed
   };
   const query = async QueryData => {
     try {
