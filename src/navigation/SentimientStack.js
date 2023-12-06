@@ -5,7 +5,7 @@ import { SentimientScreen } from '../screens/Sentiment';
 // Create a stack navigator
 const Stack = createNativeStackNavigator();
 
-export const ChatStack = () => {
+export const SentimientStack = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen

@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import styles from './styles';
 
 export const SentimientScreen = () => {
   return (
-    <View>
+    <SafeAreaView style={styles.container}>
       <Text>index</Text>
-    </View>
-  )
-}
+    </SafeAreaView>
+  );
+};

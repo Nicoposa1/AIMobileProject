@@ -4,6 +4,7 @@ import {Image, Text} from 'react-native';
 import styles from '../screens/Home/styles';
 import {Translator} from '../screens/Translator';
 import {ChatStack} from './ChatStack';
+import {SentimientStack} from './SentimientStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -37,7 +38,7 @@ export const BottomTabs = () => {
           headerShown: false,
           tabBarLabel: ({focused}) => (
             <Text style={{color: focused ? 'blue' : 'gray'}}>
-              Image Generator
+              Image
             </Text>
           ),
           tabBarIcon: ({focused}) => (
@@ -65,8 +66,28 @@ export const BottomTabs = () => {
             />
           ),
         }}
-        name="TranslatorScreen"
+        name="SentimientScreen"
         component={Translator}
+      />
+      <Tab.Screen
+        options={{
+          headerShown: false,
+          tabBarLabel: ({focused}) => (
+            <Text style={{color: focused ? 'blue' : 'gray'}}>Sentimient</Text>
+          ),
+          tabBarIcon: ({focused}) => (
+            <Image
+              source={require('../assets/images/feedback.png')}
+              style={{
+                tintColor: focused ? 'blue' : 'gray',
+                height: 20,
+                width: 20,
+              }}
+            />
+          ),
+        }}
+        name="TranslatorScreen"
+        component={SentimientStack}
       />
     </Tab.Navigator>
   );
