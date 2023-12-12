@@ -29,6 +29,7 @@ export default StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: 'black',
+    textAlign: 'center',
   },
   answer: {
     fontSize: 18,

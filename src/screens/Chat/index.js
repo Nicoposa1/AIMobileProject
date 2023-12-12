@@ -15,25 +15,27 @@ export const ChatScreen = () => {
   const [generatedText, setGeneratedText] = React.useState('');
   const [context, setContext] = React.useState('');
   const [score, setScore] = React.useState(0);
+  const [response, setResponse] = React.useState({});
 
   const fetchAnswer = async () => {
     try {
       const response = await axios.post(
-        'https://api-inference.huggingface.co/models/distilbert-base-uncased-finetuned-sst-2-english',
+        'https://api-inference.huggingface.co/models/deepset/roberta-base-squad2',
         {
-          inputs: input,
+          question: input,
+          context: context,
         },
         {
-          headers: { Authorization: `Bearer ${API_KEY}` },
+          headers: {Authorization: `Bearer ${API_KEY}`},
         },
       );
       const result = response.data;
+      setResponse(result);
       console.log(JSON.stringify(result));
     } catch (e) {
       console.log(e);
     }
   };
-  
 
   return (
     <SafeAreaView style={styles.container}>
@@ -56,12 +58,12 @@ export const ChatScreen = () => {
           <Text style={styles.btnText}>Submit</Text>
         </TouchableOpacity>
       </View>
-      {generatedText ? (
+      {response ? (
         <View>
           <Text style={styles.title}>Answer</Text>
-          <Text style={styles.answer}>{generatedText}</Text>
+          <Text style={styles.answer}>{response.answer}</Text>
           <Text style={styles.title}>Score</Text>
-          <Text style={styles.answer}>{score .toFixed(3)}</Text>
+          <Text style={styles.answer}>{response.score.toFixed(3)}</Text>
         </View>
       ) : null}
     </SafeAreaView>
