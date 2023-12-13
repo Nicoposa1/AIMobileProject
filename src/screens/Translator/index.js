@@ -12,6 +12,7 @@ import {API_KEY} from '@env';
 import styles from './styles';
 import RNPickerSelect from 'react-native-picker-select';
 import axios from 'axios';
+import {Input} from '../../components/Input';
 
 export const Translator = () => {
   const [translatedText, setTranslatedText] = React.useState('');
@@ -27,7 +28,7 @@ export const Translator = () => {
     'en-de': 'Helsinki-NLP/opus-mt-en-de',
     'en-fr': 'Helsinki-NLP/opus-mt-en-fr',
   };
-  const query = async QueryData => {
+  const query = async () => {
     try {
       const response = await axios({
         url: `https://api-inference.huggingface.co/models/Helsinki-NLP/opus-mt-${language}`,
@@ -36,7 +37,7 @@ export const Translator = () => {
           Authorization: `Bearer ${API_KEY}`,
           'Content-Type': 'text/plain',
         },
-        data: QueryData,
+        data: inputText,
       });
       console.log(response.data);
       setTranslatedText(response.data[0].translation_text);
@@ -68,29 +69,11 @@ export const Translator = () => {
             value={language}
           />
         </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            onChangeText={handleInputTextChange}
-            value={inputText}
-            placeholder="Enter text to translate"
-          />
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() =>
-              query({
-                inputs: inputText,
-              })
-            }>
-            <Image
-              source={require('../../assets/images/send-message.png')}
-              style={{
-                height: 20,
-                width: 20,
-              }}
-            />
-          </TouchableOpacity>
-        </View>
+        <Input
+          onSubmit={query}
+          setInput={handleInputTextChange}
+          input={inputText}
+        />
         {translatedText ? (
           <Text style={styles.title}>{translatedText}</Text>
         ) : null}

@@ -1,16 +1,12 @@
 import {
-  Image,
   SafeAreaView,
-  StyleSheet,
   Text,
-  TextInput,
-  TouchableOpacity,
-  View,
 } from 'react-native';
 import React from 'react';
 import styles from './styles';
 import axios from 'axios';
 import {API_KEY} from '@env';
+import {Input} from '../../components/Input';
 
 export const SentimientScreen = () => {
   const [inputText, setInputText] = React.useState('');
@@ -40,28 +36,16 @@ export const SentimientScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          onChangeText={handleInputTextChange}
-          value={inputText}
-          placeholder="Enter text"
-        />
-        <TouchableOpacity style={styles.button} onPress={() => fetchAnswer()}>
-          <Image
-            source={require('../../assets/images/send-message.png')}
-            style={{
-              height: 20,
-              width: 20,
-            }}
-          />
-        </TouchableOpacity>
-      </View>
+      <Input
+        onSubmit={fetchAnswer}
+        setInput={handleInputTextChange}
+        input={inputText}
+      />
       {response && (
         <>
-          <Text>Positive</Text>
+          <Text>{response?.[0]?.[0].label}</Text>
           <Text>{response?.[0]?.[0].score.toFixed(3)}</Text>
-          <Text>Negative</Text>
+          <Text>{response?.[0]?.[1].label}</Text>
           <Text>{response?.[0]?.[1].score.toFixed(3)}</Text>
         </>
       )}

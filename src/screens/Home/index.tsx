@@ -13,6 +13,7 @@ import React from 'react';
 import {API_KEY} from '@env';
 import axios from 'axios';
 import styles from './styles';
+import {Input} from '../../components/Input';
 
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
@@ -77,20 +78,7 @@ export const HomeScreen = () => {
           ) : (
             <View style={styles.image} />
           )}
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter text"
-              onChangeText={setInput}
-              value={input}
-            />
-            <TouchableOpacity onPress={onSubmit}>
-              <Image
-                style={styles.icon}
-                source={require('../../assets/images/send-message.png')}
-              />
-            </TouchableOpacity>
-          </View>
+          <Input onSubmit={onSubmit} setInput={setInput} input={input} />
         </View>
       </SafeAreaView>
     </KeyboardAvoidingView>
