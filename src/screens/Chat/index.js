@@ -63,7 +63,7 @@ export const ChatScreen = () => {
           <Text style={styles.title}>Answer</Text>
           <Text style={styles.answer}>{response.answer}</Text>
           <Text style={styles.title}>Score</Text>
-          <Text style={styles.answer}>{response.score.toFixed(3)}</Text>
+          <Text style={styles.answer}>{response?.score?.toFixed(3)}</Text>
         </View>
       ) : null}
     </SafeAreaView>
