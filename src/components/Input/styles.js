@@ -30,12 +30,6 @@ export default StyleSheet.create({
     padding: 10,
     borderRadius: 10,
   },
-  image: {
-    width: 300,
-    height: 300,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   icon: {
     width: 24,
     height: 24,
