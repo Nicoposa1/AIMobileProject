@@ -17,6 +17,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
+    marginBottom: 10,
   },
   title: {
     fontSize: 24,
@@ -25,7 +26,7 @@ export default StyleSheet.create({
   input: {
     width: '80%',
     height: 40,
-    margin: 12,
+    marginRight: 12,
     borderWidth: 1,
     padding: 10,
     borderRadius: 10,

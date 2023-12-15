@@ -1,6 +1,11 @@
 import {
+  Keyboard,
+  KeyboardAvoidingView,
   SafeAreaView,
   Text,
+  TextInput,
+  TouchableWithoutFeedback,
+  View,
 } from 'react-native';
 import React from 'react';
 import styles from './styles';
@@ -11,11 +16,16 @@ import {Input} from '../../components/Input';
 export const SentimientScreen = () => {
   const [inputText, setInputText] = React.useState('');
   const [response, setResponse] = React.useState({});
+  console.log(
+    '🚀 ~ file: index.js:19 ~ SentimientScreen ~ response:',
+    response,
+  );
   const handleInputTextChange = text => {
     setInputText(text);
   };
 
   const fetchAnswer = async () => {
+    Keyboard.dismiss();
     try {
       const response = await axios.post(
         'https://api-inference.huggingface.co/models/distilbert-base-uncased-finetuned-sst-2-english',
@@ -36,19 +46,82 @@ export const SentimientScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Input
-        onSubmit={fetchAnswer}
-        setInput={handleInputTextChange}
-        input={inputText}
-      />
-      {response && (
-        <>
-          <Text>{response?.[0]?.[0].label}</Text>
-          <Text>{response?.[0]?.[0].score.toFixed(3)}</Text>
-          <Text>{response?.[0]?.[1].label}</Text>
-          <Text>{response?.[0]?.[1].score.toFixed(3)}</Text>
-        </>
-      )}
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+        }}>
+        <KeyboardAvoidingView
+          style={{
+            flex: 1,
+            justifyContent: 'space-between',
+          }}
+          keyboardVerticalOffset={10}
+          behavior="padding">
+          <Text style={styles.title}>Sentiment Analysis</Text>
+          <View
+            style={{
+              width: '100%',
+            }}>
+            {Object.keys(response).length !== 0 && (
+              <View>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    fontWeight: 'semibold',
+                  }}>
+                  Your text is{' '}
+                  <Text
+                    style={{
+                      color:
+                        response?.[0]?.[0].label === 'POSITIVE'
+                          ? 'green'
+                          : 'red',
+                    }}>
+                    {response?.[0]?.[0].score.toFixed(2)}{' '}
+                  </Text>
+                  <Text
+                    style={{
+                      color:
+                        response?.[0]?.[0].label === 'POSITIVE'
+                          ? 'green'
+                          : 'red',
+                    }}>
+                    {response?.[0]?.[0].label === 'POSITIVE'
+                      ? 'positive'
+                      : 'negative'}
+                  </Text>{' '}
+                  and{' '}
+                  <Text
+                    style={{
+                      color:
+                        response?.[0]?.[0].label === 'NEGATIVE'
+                          ? 'green'
+                          : 'red',
+                    }}>
+                    {response?.[0]?.[1].score.toFixed(2)}{' '}
+                  </Text>
+                  <Text
+                    style={{
+                      color:
+                        response?.[0]?.[0].label === 'NEGATIVE'
+                          ? 'green'
+                          : 'red',
+                    }}>
+                    {response?.[0]?.[0].label === 'NEGATIVE'
+                      ? 'positive'
+                      : 'negative'}
+                  </Text>
+                </Text>
+              </View>
+            )}
+          </View>
+          <Input
+            onSubmit={fetchAnswer}
+            setInput={handleInputTextChange}
+            input={inputText}
+          />
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 };
