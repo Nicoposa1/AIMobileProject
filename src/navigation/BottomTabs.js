@@ -5,6 +5,7 @@ import styles from '../screens/Home/styles';
 import {Translator} from '../screens/Translator';
 import {ChatStack} from './ChatStack';
 import {SentimientStack} from './SentimientStack';
+import { LargeStack } from './LargeStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,7 +18,7 @@ export const BottomTabs = () => {
         options={{
           headerShown: false,
           tabBarLabel: ({focused}) => (
-            <Text style={{color: focused ? 'blue' : 'gray'}}>Chat</Text>
+            <Text style={{color: focused ? 'blue' : 'gray'}}>Context</Text>
           ),
           tabBarIcon: ({focused}) => (
             <Image
@@ -37,9 +38,7 @@ export const BottomTabs = () => {
         options={{
           headerShown: false,
           tabBarLabel: ({focused}) => (
-            <Text style={{color: focused ? 'blue' : 'gray'}}>
-              Image
-            </Text>
+            <Text style={{color: focused ? 'blue' : 'gray'}}>Image</Text>
           ),
           tabBarIcon: ({focused}) => (
             <Image
@@ -66,14 +65,14 @@ export const BottomTabs = () => {
             />
           ),
         }}
-        name="SentimientScreen"
+        name="TranslatorScreen"
         component={Translator}
       />
       <Tab.Screen
         options={{
           headerShown: false,
           tabBarLabel: ({focused}) => (
-            <Text style={{color: focused ? 'blue' : 'gray'}}>Sentimient</Text>
+            <Text style={{color: focused ? 'blue' : 'gray'}}>Sentiment</Text>
           ),
           tabBarIcon: ({focused}) => (
             <Image
@@ -86,8 +85,28 @@ export const BottomTabs = () => {
             />
           ),
         }}
-        name="TranslatorScreen"
+        name="SentimentScreen"
         component={SentimientStack}
+      />
+      <Tab.Screen
+        options={{
+          headerShown: false,
+          tabBarLabel: ({focused}) => (
+            <Text style={{color: focused ? 'blue' : 'gray'}}>Large</Text>
+          ),
+          tabBarIcon: ({focused}) => (
+            <Image
+              source={require('../assets/images/text-box.png')}
+              style={{
+                tintColor: focused ? 'blue' : 'gray',
+                height: 20,
+                width: 20,
+              }}
+            />
+          ),
+        }}
+        name="LargeScreen"
+        component={LargeStack}
       />
     </Tab.Navigator>
   );

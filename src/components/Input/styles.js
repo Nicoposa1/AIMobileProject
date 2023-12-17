@@ -6,6 +6,7 @@ export default StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    width: '100%'
   },
   contentContainer: {
     width: 300,
@@ -30,6 +31,7 @@ export default StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     borderRadius: 10,
+    width: 300,
   },
   icon: {
     width: 24,

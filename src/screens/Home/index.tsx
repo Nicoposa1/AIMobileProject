@@ -14,10 +14,18 @@ import {API_KEY} from '@env';
 import axios from 'axios';
 import styles from './styles';
 import {Input} from '../../components/Input';
+import {TopNavigator} from '../../components/TopNavigator';
+import {useNavigation} from '@react-navigation/native';
+
+import {NavigationProp, ParamListBase} from '@react-navigation/native';
+
+type Props = {
+  navigation: NavigationProp<ParamListBase>;
+};
 
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
-export const HomeScreen = () => {
+export const HomeScreen: React.FC<Props> = ({navigation}) => {
   const [input, setInput] = React.useState<string>('');
   const [imageData, setImageData] = React.useState<String>('');
   const [loading, setLoading] = React.useState(false);
@@ -62,25 +70,35 @@ export const HomeScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      enabled>
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>Image Generator</Text>
-        <View style={styles.contentContainer}>
-          {loading ? (
-            <View style={styles.image}>
-              <ActivityIndicator size="large" color="#0000ff" />
-            </View>
-          ) : imageData !== '' ? (
-            <Image style={styles.image} source={{uri: `${imageData}`}} />
-          ) : (
-            <View style={styles.image} />
-          )}
-          <Input onSubmit={onSubmit} setInput={setInput} input={input} />
-        </View>
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+    <>
+      <TopNavigator
+        title="Image Generator"
+        nextScreen={() => {
+          navigation.navigate('TranslatorScreen');
+        }}
+        lastScreen={() => {
+          navigation.navigate('ChatScreen');
+        }}
+      />
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        enabled>
+        <SafeAreaView style={styles.container}>
+          <View style={styles.contentContainer}>
+            {loading ? (
+              <View style={styles.image}>
+                <ActivityIndicator size="large" color="#0000ff" />
+              </View>
+            ) : imageData !== '' ? (
+              <Image style={styles.image} source={{uri: `${imageData}`}} />
+            ) : (
+              <View style={styles.image} />
+            )}
+            <Input onSubmit={onSubmit} setInput={setInput} input={input} />
+          </View>
+        </SafeAreaView>
+      </KeyboardAvoidingView>
+    </>
   );
 };

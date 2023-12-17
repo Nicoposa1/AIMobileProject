@@ -10,6 +10,8 @@ import React from 'react';
 import styles from './styles';
 import axios from 'axios';
 import {API_KEY} from '@env';
+import {useNavigation} from '@react-navigation/native';
+import {TopNavigator} from '../../components/TopNavigator';
 export const ChatScreen = () => {
   const [input, setInput] = React.useState('');
   const [generatedText, setGeneratedText] = React.useState('');
@@ -17,6 +19,7 @@ export const ChatScreen = () => {
   const [score, setScore] = React.useState(0);
   const [response, setResponse] = React.useState({});
 
+  const navigation = useNavigation();
   const fetchAnswer = async () => {
     try {
       const response = await axios.post(
@@ -38,34 +41,41 @@ export const ChatScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{width: '80%'}}>
-        <Text style={styles.title}>Context</Text>
-        <TextInput
-          style={styles.questionBox}
-          placeholder="Enter text"
-          onChangeText={setContext}
-          value={context}
-        />
-        <Text style={[styles.title, {marginTop: 20}]}>Question</Text>
-        <TextInput
-          style={styles.questionBox}
-          placeholder="Enter text"
-          onChangeText={setInput}
-          value={input}
-        />
-        <TouchableOpacity onPress={fetchAnswer} style={styles.btn}>
-          <Text style={styles.btnText}>Submit</Text>
-        </TouchableOpacity>
-      </View>
-      {response ? (
-        <View>
-          <Text style={styles.title}>Answer</Text>
-          <Text style={styles.answer}>{response.answer}</Text>
-          <Text style={styles.title}>Score</Text>
-          <Text style={styles.answer}>{response?.score?.toFixed(3)}</Text>
+    <>
+      <TopNavigator
+        title="Context"
+        nextScreen={() => navigation.navigate('ImageGeneratorScreen')}
+        lastScreen={() => navigation.navigate('LargeScreen')}
+      />
+      <SafeAreaView style={styles.container}>
+        <View style={{width: '80%'}}>
+          <Text style={styles.title}>Context</Text>
+          <TextInput
+            style={styles.questionBox}
+            placeholder="Enter text"
+            onChangeText={setContext}
+            value={context}
+          />
+          <Text style={[styles.title, {marginTop: 20}]}>Question</Text>
+          <TextInput
+            style={styles.questionBox}
+            placeholder="Enter text"
+            onChangeText={setInput}
+            value={input}
+          />
+          <TouchableOpacity onPress={fetchAnswer} style={styles.btn}>
+            <Text style={styles.btnText}>Submit</Text>
+          </TouchableOpacity>
         </View>
-      ) : null}
-    </SafeAreaView>
+        {response ? (
+          <View>
+            <Text style={styles.title}>Answer</Text>
+            <Text style={styles.answer}>{response.answer}</Text>
+            <Text style={styles.title}>Score</Text>
+            <Text style={styles.answer}>{response?.score?.toFixed(3)}</Text>
+          </View>
+        ) : null}
+      </SafeAreaView>
+    </>
   );
 };

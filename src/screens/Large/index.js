@@ -15,11 +15,14 @@ import {Input} from '../../components/Input';
 import {TopNavigator} from '../../components/TopNavigator';
 import {useNavigation} from '@react-navigation/native';
 
-export const SentimientScreen = () => {
+export const LargeScreen = () => {
   const navigation = useNavigation();
-
   const [inputText, setInputText] = React.useState('');
   const [response, setResponse] = React.useState({});
+  console.log(
+    '🚀 ~ file: index.js:19 ~ SentimientScreen ~ response:',
+    response,
+  );
   const handleInputTextChange = text => {
     setInputText(text);
   };
@@ -47,12 +50,12 @@ export const SentimientScreen = () => {
   return (
     <>
       <TopNavigator
-        title="Sentiment Analysis"
+        title="Large Text"
         nextScreen={() => {
-          navigation.navigate('LargeScreen');
+          navigation.navigate('ChatScreen');
         }}
         lastScreen={() => {
-          navigation.navigate('TranslatorScreen');
+          navigation.navigate('SentimentScreen');
         }}
       />
       <SafeAreaView style={styles.container}>
@@ -67,6 +70,7 @@ export const SentimientScreen = () => {
             }}
             keyboardVerticalOffset={100}
             behavior="padding">
+            <Text style={styles.title}>Sentiment Analysis</Text>
             <View
               style={{
                 width: '100%',
