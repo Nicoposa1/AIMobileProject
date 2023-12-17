@@ -2,9 +2,9 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  Image,
   SafeAreaView,
   Text,
+  Keyboard,
 } from 'react-native';
 import React from 'react';
 import styles from './styles';
@@ -14,13 +14,16 @@ import {useNavigation} from '@react-navigation/native';
 import {TopNavigator} from '../../components/TopNavigator';
 export const ChatScreen = () => {
   const [input, setInput] = React.useState('');
+  console.log("🚀 ~ file: index.js:17 ~ ChatScreen ~ input:", input)
   const [generatedText, setGeneratedText] = React.useState('');
   const [context, setContext] = React.useState('');
+  console.log("🚀 ~ file: index.js:19 ~ ChatScreen ~ context:", context)
   const [score, setScore] = React.useState(0);
   const [response, setResponse] = React.useState({});
 
   const navigation = useNavigation();
   const fetchAnswer = async () => {
+    Keyboard.dismiss();
     try {
       const response = await axios.post(
         'https://api-inference.huggingface.co/models/deepset/roberta-base-squad2',

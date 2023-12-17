@@ -18,13 +18,13 @@ export const BottomTabs = () => {
         options={{
           headerShown: false,
           tabBarLabel: ({focused}) => (
-            <Text style={{color: focused ? 'blue' : 'gray'}}>Context</Text>
+            <Text style={{color: focused ? '#007bff' : 'gray'}}>Context</Text>
           ),
           tabBarIcon: ({focused}) => (
             <Image
               source={require('../assets/images/chat.png')}
               style={{
-                tintColor: focused ? 'blue' : 'gray',
+                tintColor: focused ? '#007bff' : 'gray',
                 height: 20,
                 width: 20,
               }}
@@ -38,12 +38,12 @@ export const BottomTabs = () => {
         options={{
           headerShown: false,
           tabBarLabel: ({focused}) => (
-            <Text style={{color: focused ? 'blue' : 'gray'}}>Image</Text>
+            <Text style={{color: focused ? '#007bff' : 'gray'}}>Image</Text>
           ),
           tabBarIcon: ({focused}) => (
             <Image
               source={require('../assets/images/image.png')}
-              style={[styles.icon, {tintColor: focused ? 'blue' : 'gray'}]}
+              style={[styles.icon, {tintColor: focused ? '#007bff' : 'gray'}]}
             />
           ),
         }}
@@ -52,13 +52,13 @@ export const BottomTabs = () => {
         options={{
           headerShown: false,
           tabBarLabel: ({focused}) => (
-            <Text style={{color: focused ? 'blue' : 'gray'}}>Translator</Text>
+            <Text style={{color: focused ? '#007bff' : 'gray'}}>Translator</Text>
           ),
           tabBarIcon: ({focused}) => (
             <Image
               source={require('../assets/images/translation.png')}
               style={{
-                tintColor: focused ? 'blue' : 'gray',
+                tintColor: focused ? '#007bff' : 'gray',
                 height: 20,
                 width: 20,
               }}
@@ -72,13 +72,13 @@ export const BottomTabs = () => {
         options={{
           headerShown: false,
           tabBarLabel: ({focused}) => (
-            <Text style={{color: focused ? 'blue' : 'gray'}}>Sentiment</Text>
+            <Text style={{color: focused ? '#007bff' : 'gray'}}>Sentiment</Text>
           ),
           tabBarIcon: ({focused}) => (
             <Image
               source={require('../assets/images/feedback.png')}
               style={{
-                tintColor: focused ? 'blue' : 'gray',
+                tintColor: focused ? '#007bff' : 'gray',
                 height: 20,
                 width: 20,
               }}
@@ -92,13 +92,13 @@ export const BottomTabs = () => {
         options={{
           headerShown: false,
           tabBarLabel: ({focused}) => (
-            <Text style={{color: focused ? 'blue' : 'gray'}}>Large</Text>
+            <Text style={{color: focused ? '#007bff' : 'gray'}}>Large</Text>
           ),
           tabBarIcon: ({focused}) => (
             <Image
               source={require('../assets/images/text-box.png')}
               style={{
-                tintColor: focused ? 'blue' : 'gray',
+                tintColor: focused ? '#007bff' : 'gray',
                 height: 20,
                 width: 20,
               }}

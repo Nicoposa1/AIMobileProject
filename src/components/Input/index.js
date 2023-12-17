@@ -12,9 +12,15 @@ export const Input = ({onSubmit, setInput, input}) => {
         value={input}
         onSubmitEditing={onSubmit}
       />
-      <TouchableOpacity onPress={onSubmit}>
+      <TouchableOpacity onPress={onSubmit} style={{
+        height: 40,
+        width: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
         <Image
           style={styles.icon}
+          tintColor={'#007bff'}
           source={require('../../assets/images/send-message.png')}
         />
       </TouchableOpacity>

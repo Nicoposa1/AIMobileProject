@@ -20,7 +20,8 @@ export default StyleSheet.create({
   title: {
     textAlign: 'center',
     fontSize: 24,
-    fontWeight: 'semibold',
+    fontWeight: '700',
+    marginBottom: 20,
   },
   input: {
     width: '80%',

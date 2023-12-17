@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Keyboard,
   KeyboardAvoidingView,
   SafeAreaView,
@@ -17,7 +18,7 @@ import {useNavigation} from '@react-navigation/native';
 
 export const SentimientScreen = () => {
   const navigation = useNavigation();
-
+  const [loading, setLoading] = React.useState(false);
   const [inputText, setInputText] = React.useState('');
   const [response, setResponse] = React.useState({});
   const handleInputTextChange = text => {
@@ -25,6 +26,8 @@ export const SentimientScreen = () => {
   };
 
   const fetchAnswer = async () => {
+    setLoading(true);
+    setResponse({});
     Keyboard.dismiss();
     try {
       const response = await axios.post(
@@ -37,10 +40,11 @@ export const SentimientScreen = () => {
         },
       );
       const result = response.data;
+      setLoading(false);
       setResponse(result);
-      console.log(JSON.stringify(result));
     } catch (e) {
       console.log(e);
+      setLoading(false);
     }
   };
 
@@ -71,6 +75,7 @@ export const SentimientScreen = () => {
               style={{
                 width: '100%',
               }}>
+              {loading && <ActivityIndicator size="large" color="#007bff" />}
               {Object.keys(response).length !== 0 && (
                 <View>
                   <Text

@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Image,
   Keyboard,
   KeyboardAvoidingView,
@@ -20,16 +21,16 @@ export const Translator = () => {
   const navigation = useNavigation();
 
   const [translatedText, setTranslatedText] = React.useState('');
-  console.log(
-    '🚀 ~ file: index.js:18 ~ Translator ~ translatedText:',
-    translatedText,
-  );
+  console.log("🚀 ~ file: index.js:24 ~ Translator ~ translatedText:", translatedText)
   const [inputText, setInputText] = React.useState('');
+  console.log("🚀 ~ file: index.js:26 ~ Translator ~ inputText:", inputText)
   const [language, setLanguage] = React.useState('en-es');
-
+  console.log('🚀 ~ file: index.js:26 ~ Translator ~ language:', language);
+  const [loading, setLoading] = React.useState(false);
   const query = async () => {
+    setTranslatedText('');
+    setLoading(true);
     Keyboard.dismiss();
-
     try {
       const response = await axios({
         url: `https://api-inference.huggingface.co/models/Helsinki-NLP/opus-mt-${language}`,
@@ -41,10 +42,12 @@ export const Translator = () => {
         data: inputText,
       });
       console.log(response.data);
+      setLoading(false);
       setTranslatedText(response.data[0].translation_text);
       return response.data;
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -117,10 +120,10 @@ export const Translator = () => {
                   }}
                 />
               </TouchableOpacity>
+              {loading && <ActivityIndicator size="large" color="#007bff" />}
               {translatedText ? (
                 <Text style={styles.title}>{translatedText}</Text>
               ) : null}
-        
 
               <Input
                 onSubmit={query}

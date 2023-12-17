@@ -27,7 +27,6 @@ export default StyleSheet.create({
   input: {
     width: '80%',
     height: 40,
-    marginRight: 12,
     borderWidth: 1,
     padding: 10,
     borderRadius: 10,

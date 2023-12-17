@@ -1,12 +1,14 @@
 import {
   ActivityIndicator,
   Image,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import React from 'react';
@@ -27,6 +29,7 @@ global.Buffer = global.Buffer || require('buffer').Buffer;
 
 export const HomeScreen: React.FC<Props> = ({navigation}) => {
   const [input, setInput] = React.useState<string>('');
+  console.log('🚀 ~ file: index.tsx:32 ~ input:', input);
   const [imageData, setImageData] = React.useState<String>('');
   const [loading, setLoading] = React.useState(false);
 
@@ -55,6 +58,7 @@ export const HomeScreen: React.FC<Props> = ({navigation}) => {
   };
 
   const onSubmit = async () => {
+    Keyboard.dismiss();
     setLoading(true);
     try {
       const data = {inputs: input};
@@ -80,25 +84,30 @@ export const HomeScreen: React.FC<Props> = ({navigation}) => {
           navigation.navigate('ChatScreen');
         }}
       />
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        enabled>
-        <SafeAreaView style={styles.container}>
-          <View style={styles.contentContainer}>
-            {loading ? (
-              <View style={styles.image}>
-                <ActivityIndicator size="large" color="#0000ff" />
-              </View>
-            ) : imageData !== '' ? (
-              <Image style={styles.image} source={{uri: `${imageData}`}} />
-            ) : (
-              <View style={styles.image} />
-            )}
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+        }}>
+        <KeyboardAvoidingView
+          style={styles.container}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          enabled>
+          <SafeAreaView style={styles.subContainer}>
+            <View style={styles.inputContainer}>
+              {loading ? (
+                <View style={styles.image}>
+                  <ActivityIndicator size="large" color="#0000ff" />
+                </View>
+              ) : imageData !== '' ? (
+                <Image style={styles.image} source={{uri: `${imageData}`}} />
+              ) : (
+                <View style={styles.image} />
+              )}
+            </View>
             <Input onSubmit={onSubmit} setInput={setInput} input={input} />
-          </View>
-        </SafeAreaView>
-      </KeyboardAvoidingView>
+          </SafeAreaView>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     </>
   );
 };

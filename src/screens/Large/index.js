@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Keyboard,
   KeyboardAvoidingView,
   SafeAreaView,
@@ -17,21 +18,20 @@ import {useNavigation} from '@react-navigation/native';
 
 export const LargeScreen = () => {
   const navigation = useNavigation();
+  const [loading, setLoading] = React.useState(false);
   const [inputText, setInputText] = React.useState('');
   const [response, setResponse] = React.useState({});
-  console.log(
-    '🚀 ~ file: index.js:19 ~ SentimientScreen ~ response:',
-    response,
-  );
   const handleInputTextChange = text => {
     setInputText(text);
   };
 
   const fetchAnswer = async () => {
+    setLoading(true);
+    setResponse({});
     Keyboard.dismiss();
     try {
       const response = await axios.post(
-        'https://api-inference.huggingface.co/models/distilbert-base-uncased-finetuned-sst-2-english',
+        'https://api-inference.huggingface.co/models/facebook/bart-large-cnn',
         {
           inputs: inputText,
         },
@@ -41,9 +41,11 @@ export const LargeScreen = () => {
       );
       const result = response.data;
       setResponse(result);
+      setLoading(false);
       console.log(JSON.stringify(result));
     } catch (e) {
       console.log(e);
+      setLoading(false);
     }
   };
 
@@ -70,60 +72,29 @@ export const LargeScreen = () => {
             }}
             keyboardVerticalOffset={100}
             behavior="padding">
-            <Text style={styles.title}>Sentiment Analysis</Text>
             <View
               style={{
-                width: '100%',
+                marginTop: 20,
+                marginHorizontal: 20,
               }}>
+              <Text
+                style={{
+                  textAlign: 'left',
+                  fontWeight: '700',
+                  fontSize: 20,
+                  marginBottom: 20,
+                }}>
+                Generate Text
+              </Text>
+              {loading && <ActivityIndicator size="large" color="#007bff" />}
               {Object.keys(response).length !== 0 && (
                 <View>
                   <Text
                     style={{
-                      textAlign: 'center',
+                      textAlign: 'left',
                       fontWeight: 'semibold',
                     }}>
-                    Your text is{' '}
-                    <Text
-                      style={{
-                        color:
-                          response?.[0]?.[0].label === 'POSITIVE'
-                            ? 'green'
-                            : 'red',
-                      }}>
-                      {response?.[0]?.[0].score.toFixed(2)}{' '}
-                    </Text>
-                    <Text
-                      style={{
-                        color:
-                          response?.[0]?.[0].label === 'POSITIVE'
-                            ? 'green'
-                            : 'red',
-                      }}>
-                      {response?.[0]?.[0].label === 'POSITIVE'
-                        ? 'positive'
-                        : 'negative'}
-                    </Text>{' '}
-                    and{' '}
-                    <Text
-                      style={{
-                        color:
-                          response?.[0]?.[0].label === 'NEGATIVE'
-                            ? 'green'
-                            : 'red',
-                      }}>
-                      {response?.[0]?.[1].score.toFixed(2)}{' '}
-                    </Text>
-                    <Text
-                      style={{
-                        color:
-                          response?.[0]?.[0].label === 'NEGATIVE'
-                            ? 'green'
-                            : 'red',
-                      }}>
-                      {response?.[0]?.[0].label === 'NEGATIVE'
-                        ? 'positive'
-                        : 'negative'}
-                    </Text>
+                    {response[0].summary_text}
                   </Text>
                 </View>
               )}
